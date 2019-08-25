@@ -10,18 +10,17 @@ services:
     volumes:
       - ./:/usr/share/nginx/blog
 
-      nginx:
-        image: nginx:1.15
-        container_name: blog_nginx
-        working_dir: /usr/share/nginx/blog
-        networks:
-          - blog
-        ports:
-          - "8080:80"
-        volumes:
-          - ./:/usr/share/nginx/blog
-
-  ./docker/nginx/conf.d/default.conf:/etc/nginx/confi.d/default.conf
+  nginx:
+    image: nginx:1.15
+    container_name: blog_nginx
+    working_dir: /usr/share/nginx/blog
+    networks:
+      - blog
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/usr/share/nginx/blog
+      - ./docker/nginx/conf.d/default.conf:/etc/nginx/confi.d/default.conf
 
   mysql:
     image: mysql:5.7
@@ -33,6 +32,7 @@ services:
       - MYSQL_ROOT_PASSWORD=password
       - MYSQL_USER=blog
       - MYSQL_PASSWORD=password
-  networks:
-    blog:
-      driver: bridge
+
+networks:
+  blog:
+    driver: bridge
